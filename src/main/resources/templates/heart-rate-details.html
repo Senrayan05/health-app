@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Heart Rate Details</title>
+     <link rel="stylesheet" type="text/css" th:href="@{styles.css}">
+</head>
+<body>
+
+<h2>Heart Rate Records for Patient ID: <span th:text="${patientId}"></span></h2>
+
+<!-- Show an error message if no heart rate records are found -->
+<div th:if="${error}" style="color: red;">
+    <p th:text="${error}"></p>
+</div>
+
+<!-- Display previous heart rate records if available -->
+<table border="1" th:if="${heartRates != null and !heartRates.isEmpty()}">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Heart Rate (BPM)</th>
+            <th>Last Update Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="heartRate : ${heartRates}">
+            <td th:text="${heartRate.id}"></td>
+            <td th:text="${heartRate.heartRate}"></td>
+            <td th:text="${heartRate.recordedAt}"></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Add New Heart Rate Form -->
+<h3>Add New Heart Rate</h3>
+<form th:action="@{/heart-rate/add}" method="post">
+    <input type="hidden" name="patientId" th:value="${patientId}" />
+    
+    <label>Heart Rate (BPM):</label>
+    <input type="number" name="heartRate" required />
+
+    <button type="submit">Add Heart Rate</button>
+</form>
+
+</body>
+</html>

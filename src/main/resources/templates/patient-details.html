@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient List</title>
+ </head>
+<body>
+    <h2>All Patients</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="patient : ${patients}">
+            <td th:text="${patient.id}"></td>
+            <td th:text="${patient.name}"></td>
+            <td th:text="${patient.age}"></td>
+            <td>
+                <a th:href="@{/details/{id}(id=${patient.id})}">View</a> |
+                <a th:href="@{/heart-rate/patient/{id}(id=${patient.id})}">
+    <input type="submit" value="Heart Rate Details">
+</a>
+                
+            </td>
+        </tr>
+    </table>
+    <br>
+    <a href="/adding-patient">Add New Patient</a>
+</body>
+</html>

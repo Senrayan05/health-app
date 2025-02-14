@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Welcome to the Dashboard</h2>
+
+    <nav>
+        <a href="/adding-patient">
+            <button type="button">Add Patient</button>
+        </a>  
+        <br/><br/>
+        
+        <a href="/patient-list">
+            <button type="button">Patient Details</button>
+        </a>  
+        <br/><br/>
+
+        <a th:if="${patient != null}" th:href="@{/heart-rate/patient/{id}(id=${patient.id})}">
+            <button type="button">Heart Rate Details</button>
+        </a>
+    </nav>
+
+    <div id="content"></div>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+
+    <script>
+        function loadPage(page) {
+            fetch('/' + page)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('content').innerHTML = html;
+                })
+                .catch(error => console.error('Error loading page:', error));
+        }
+    </script>
+</body>
+</html>
